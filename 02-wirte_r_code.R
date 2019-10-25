@@ -63,4 +63,36 @@ pins::pin(df_tidy,
 
 # pins::pin_remove("jma_tidy", board = "rsconnect")
 
+pins::board_register("local")
+pins::pin(df_tidy, name = "jma_tidy", description = "jma weather data tidyup", board = "local")
+
+renv::install("bench")
+renv::install("ggbeeswarm")
+library(ggplot2)
+library(bench)
+res <-
+  mark(
+    raw =
+      read_csv("data-raw/jma_weather.csv",
+               locale = locale(encoding = "cp932"),
+               skip = 6,
+               col_names =
+                 c("date",
+                   paste0(rep(c("st_Tsukuba", "st_Sapporo", "st_Okayama", "st_Fukuoka"), each = 12),
+                          "_",
+                          rep(c("mean.temperature(℃)", "precipitation.sum(mm)", "temperature.max(℃)", "temperature.min(℃)"), each = 3),
+                          c("", "quality", "equality", "", "information", "quality", "equality", "", "quality", "equality"))
+                 )) %>%
+      mutate_at(vars(contains("date")), as.Date) %>%
+      select(date, matches("\\(.+\\)$")) %>%
+      pivot_longer(-date,
+                   names_to = "variable") %>%
+      extract(col = variable, into = c("station", "variable"), regex = "st_(.+)_(.+)") %>%
+      pivot_wider(names_from = variable,
+                  values_from = value),
+    saved_rds = readr::read_rds("data/jma_weather_tidy.rds"),
+    pins = pins::pin_get("jma_tidy", board = "local")
+  )
+autoplot(res)
+
 renv::snapshot(confirm = FALSE)

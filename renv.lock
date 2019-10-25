@@ -100,6 +100,13 @@
       "Repository": "CRAN",
       "Hash": "d355963b4b1c3039bfe8d65611a11cca"
     },
+    "bench": {
+      "Package": "bench",
+      "Version": "1.0.4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "cec8e94b85ffb90e79d0fc8280880671"
+    },
     "class": {
       "Package": "class",
       "Version": "7.3-15",
@@ -376,6 +383,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "16b33ad02d2d189ec057cfd731da86a6"
+    },
+    "profmem": {
+      "Package": "profmem",
+      "Version": "0.5.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "768155d66c5b0fa59a44e32364342e25"
     },
     "purrr": {
       "Package": "purrr",
