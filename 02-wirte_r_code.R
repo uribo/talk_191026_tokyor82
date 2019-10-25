@@ -42,4 +42,25 @@ df_tidy
 df_tidy %>%
   write_rds("data/jma_weather_tidy.rds")
 renv::status()
+
+renv::install("gitlab::uribo/jmastats")
+renv::install("rstudioapi")
+df_tidy <-
+  df_tidy %>%
+  jmastats:::convert_variable_unit() %>%
+  purrr::set_names(c("date", "station",
+                     "temperature_average", "precipitation_sum",
+                     "temperature_max", "temperature_min"))
+
+pins::board_register_rsconnect(name = "rsconnect",
+                         account = "uribo",
+                         server = "https://beta.rstudioconnect.com",
+                         key = rstudioapi::askForPassword())
+pins::pin(df_tidy,
+          name = "jma_tidy",
+          description = "jma weather data tidyup",
+          board = "rsconnect")
+
+# pins::pin_remove("jma_tidy", board = "rsconnect")
+
 renv::snapshot(confirm = FALSE)
