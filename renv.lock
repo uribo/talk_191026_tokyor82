@@ -8,6 +8,11 @@
       }
     ]
   },
+  "Python": {
+    "Version": "3.7.3",
+    "Type": "conda",
+    "Name": "talk_191026_tokyor82"
+  },
   "Packages": {
     "BH": {
       "Package": "BH",
