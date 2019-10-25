@@ -8,5 +8,18 @@
       }
     ]
   },
-  "Packages": {}
+  "Packages": {
+    "renv": {
+      "Package": "renv",
+      "Version": "0.7.1-28",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "renv",
+      "RemoteUsername": "rstudio",
+      "RemoteRef": "master",
+      "RemoteSha": "d9ac005031985ec5f01c24d01275d21b7f9fddd2",
+      "Hash": "31ff521a10be9889441c1812ed06de0d"
+    }
+  }
 }
