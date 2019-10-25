@@ -16,3 +16,4 @@ library(magrittr)
 status()
 snapshot()
 
+revert(commit = "e8ef93dded820b5648b35696e2e23a2c92204681")

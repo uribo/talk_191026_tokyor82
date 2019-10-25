@@ -18,7 +18,7 @@ d$geometry <-
 
 d <-
   d %>%
-  st_sf(crs = as.numeric(gsub("epsg:", "", py$word_crs)))
+  st_sf(crs = as.numeric(gsub("epsg:", "", py$word_crs))) %>%
   tibble::new_tibble(subclass = "sf", nrow = nrow(.))
 
 plot(st_geometry(d))
