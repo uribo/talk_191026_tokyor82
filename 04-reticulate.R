@@ -20,6 +20,6 @@ repl_python()
 # conda remove -n talk_191026_tokyor82 --all
 # conda create -n talk_191026_tokyor82
 # conda activate talk_191026_tokyor82
-# conda install -c conda-forge matplotlib gdal geopandas shapely
+# conda install -c conda-forge matplotlib gdal geopandas=0.4.1=py_0 shapely descartes
 # conda install -c conda-forge earthengine-api folium
-# conda update --all
+# ~~conda update --all~~
