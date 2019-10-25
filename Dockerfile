@@ -1,4 +1,4 @@
-FROM rocker/rstudio:3.6.1
+FROM rocker/geospatial:3.6.0
 
 RUN set -x && \
   apt-get update && \
@@ -10,7 +10,7 @@ ARG GITHUB_PAT
 RUN set -x && \
   echo "GITHUB_PAT=$GITHUB_PAT" >> /usr/local/lib/R/etc/Renviron
 
-ENV RENV_VERSION 0.7.1-28
+ENV RENV_VERSION 0.8.1
 RUN set -x && \
   Rscript -e \
     "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))" && \
@@ -21,4 +21,4 @@ WORKDIR /home/rstudio/talk_191026_tokyor82
 COPY renv.lock ./
 RUN set -x && \
   Rscript -e \
-  'renv::settings$use.cache(FALSE); renv::restore(library = "/usr/lib/R/site-library", confirm = FALSE)'
+  'renv::restore(library = "/usr/lib/R/site-library", confirm = FALSE)'
