@@ -1,0 +1,3 @@
+- path: weather_lm_result
+  name: weather_lm_result
+  type: default
