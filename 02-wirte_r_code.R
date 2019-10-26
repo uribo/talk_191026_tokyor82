@@ -17,17 +17,13 @@ library(tidyr)
 df <-
   read_csv("data-raw/jma_weather.csv",
            locale = locale(encoding = "cp932"),
-           skip = 6,
-           col_names =
-             c("date",
-               paste0(rep(c("st_Tsukuba", "st_Sapporo", "st_Okayama", "st_Fukuoka"), each = 12),
-                      "_",
-                      rep(c("mean.temperature(℃)", "precipitation.sum(mm)", "temperature.max(℃)", "temperature.min(℃)"), each = 3),
-                      c("", "quality", "equality", "", "information", "quality", "equality", "", "quality", "equality"))
-             )) %>%
-  mutate_at(vars(contains("date")), as.Date) %>%
-  select(date, matches("\\(.+\\)$"))
-df
+           skip = 5) %>%
+  mutate_at(vars(X1), as.Date) %>%
+  select(date = X1, starts_with("X")) %>%
+  purrr::set_names(c("date",
+                     paste(rep(c("st_Tsukuba", "st_Sapporo", "st_Okayama", "st_Fukuoka"), each = 4),
+                            rep(c("mean.temperature(℃)", "precipitation.sum(mm)", "temperature.max(℃)", "temperature.min(℃)")),
+                           sep = "_")))
 
 df_tidy <-
   df %>%
@@ -75,16 +71,13 @@ res <-
     raw =
       read_csv("data-raw/jma_weather.csv",
                locale = locale(encoding = "cp932"),
-               skip = 6,
-               col_names =
-                 c("date",
-                   paste0(rep(c("st_Tsukuba", "st_Sapporo", "st_Okayama", "st_Fukuoka"), each = 12),
-                          "_",
-                          rep(c("mean.temperature(℃)", "precipitation.sum(mm)", "temperature.max(℃)", "temperature.min(℃)"), each = 3),
-                          c("", "quality", "equality", "", "information", "quality", "equality", "", "quality", "equality"))
-                 )) %>%
-      mutate_at(vars(contains("date")), as.Date) %>%
-      select(date, matches("\\(.+\\)$")) %>%
+               skip = 5) %>%
+      mutate_at(vars(X1), as.Date) %>%
+      select(date = X1, starts_with("X")) %>%
+      purrr::set_names(c("date",
+                         paste(rep(c("st_Tsukuba", "st_Sapporo", "st_Okayama", "st_Fukuoka"), each = 4),
+                               rep(c("mean.temperature(℃)", "precipitation.sum(mm)", "temperature.max(℃)", "temperature.min(℃)")),
+                               sep = "_"))) %>%
       pivot_longer(-date,
                    names_to = "variable") %>%
       extract(col = variable, into = c("station", "variable"), regex = "st_(.+)_(.+)") %>%
