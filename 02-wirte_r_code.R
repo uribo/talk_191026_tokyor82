@@ -105,11 +105,7 @@ lm_res <-
   summary()
 
 pins::board_register_github(repo = "uribo/talk_191026_tokyor82")
-pins::pin(lm_res, name = "weather_lm_result", board = "github")
+# pins::pin(lm_res, name = "weather_lm_result", board = "github")
 pins::pin_get(name = "weather_lm_result", board = "github", cache = TRUE)
-
-pins::board_register_kaggle(token = "~/.kaggle/kaggle.json")
-pins::pin_find("global-map-japan", board = "kaggle")
-pins::pin_get("gsi-japan/global-map-japan-data", board = "kaggle", cache = TRUE)
 
 renv::snapshot(confirm = FALSE)
