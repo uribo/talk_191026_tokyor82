@@ -51,7 +51,7 @@ df_tidy <-
 pins::board_register_rsconnect(name = "rsconnect",
                          account = "uribo",
                          server = "https://beta.rstudioconnect.com",
-                         key = rstudioapi::askForPassword())
+                         key = Sys.getenv("RSCONNECT_KEY"))
 pins::pin(df_tidy,
           name = "jma_tidy",
           description = "jma weather data tidyup",
@@ -60,7 +60,9 @@ pins::pin(df_tidy,
 # pins::pin_remove("jma_tidy", board = "rsconnect")
 
 pins::board_register("local")
-pins::pin(df_tidy, name = "jma_tidy", description = "jma weather data tidyup", board = "local")
+pins::pin(df_tidy, name = "jma_tidy",
+          description = "jma weather data tidyup",
+          board = "local")
 
 renv::install("bench")
 renv::install("ggbeeswarm")
@@ -87,5 +89,27 @@ res <-
     pins = pins::pin_get("jma_tidy", board = "local")
   )
 autoplot(res)
+
+library(ggforce)
+df_tidy %>%
+  filter(precipitation_sum < units::set_units(100, mm)) %>%
+  ggplot(aes(precipitation_sum, temperature_max, group = station, color = station)) +
+  geom_point() +
+  geom_smooth(method = "lm")
+
+lm_res <-
+  df_tidy %>%
+  mutate_at(vars(starts_with("temperature"), starts_with("precipitation")),
+            list(~ scale(units::drop_units(.)))) %>%
+  lm(temperature_max ~ precipitation_sum + station, data = .) %>%
+  summary()
+
+pins::board_register_github(repo = "uribo/talk_191026_tokyor82")
+pins::pin(lm_res, name = "weather_lm_result", board = "github")
+pins::pin_get(name = "weather_lm_result", board = "github", cache = TRUE)
+
+pins::board_register_kaggle(token = "~/.kaggle/kaggle.json")
+pins::pin_find("global-map-japan", board = "kaggle")
+pins::pin_get("gsi-japan/global-map-japan-data", board = "kaggle", cache = TRUE)
 
 renv::snapshot(confirm = FALSE)

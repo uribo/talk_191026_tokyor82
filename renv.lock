@@ -450,17 +450,6 @@
       "Repository": "CRAN",
       "Hash": "3be3097a603e8a51dae89c372b920f97"
     },
-    "rstudioapi": {
-      "Package": "rstudioapi",
-      "Version": "0.10",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "RemoteType": "standard",
-      "RemoteRef": "rstudioapi",
-      "RemoteRepos": "https://cran.rstudio.com",
-      "RemoteSha": "0.10",
-      "Hash": "04552808fd065fdf0fec7bad340eb83c"
-    },
     "rvest": {
       "Package": "rvest",
       "Version": "0.3.4",
